@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+        <div class="container">
+        <header>
+            <h1>🚦 Advanced Traffic Simulation System</h1>
+            <p>Advanced Real-time Traffic Management with AI-Powered Controls</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="intersection-container">
+                <div class="intersection" id="intersection">
+                    <div class="road vertical">
+                        <div class="road-marking" style="top: 10%;"></div>
+                        <div class="road-marking" style="top: 30%;"></div>
+                        <div class="road-marking" style="top: 50%;"></div>
+                        <div class="road-marking" style="top: 70%;"></div>
+                        <div class="road-marking" style="top: 90%;"></div>
+                    </div> 
+                    <div class="road horizontal">
+                        <div class="road-marking" style="left: 10%;"></div>
+                        <div class="road-marking" style="left: 30%;"></div>
+                        <div class="road-marking" style="left: 50%;"></div>
+                        <div class="road-marking" style="left: 70%;"></div>
+                        <div class="road-marking" style="left: 90%;"></div>
+                    </div>
+
+                    <div class="vehicles-container" id="vehiclesContainer"></div>
+
+                    <div class="traffic-light north-south" id="nsTrafficLight">
+                        <div class="light red" id="nsRed"></div>
+                        <div class="light yellow" id="nsYellow"></div>
+                        <div class="light green" id="nsGreen"></div>
+                        <div class="direction-label">N-S</div>
+                    </div>
+
+                    <div class="traffic-light east-west" id="ewTrafficLight">
+                        <div class="light red" id="ewRed"></div>
+                        <div class="light yellow" id="ewYellow"></div>
+                        <div class="light green" id="ewGreen"></div>
+                        <div class="direction-label">E-W</div>
+                    </div>
+
+                    <div class="sensor north-sensor" id="northSensor">
+                        <div class="sensor-indicator"></div>
+                        <span>N</span>
+                    </div>
+                    <div class="sensor south-sensor" id="southSensor">
+                        <div class="sensor-indicator"></div>
+                        <span>S</span>
+                    </div>
+                    <div class="sensor east-sensor" id="eastSensor">
+                        <div class="sensor-indicator"></div>
+                        <span>E</span>
+                    </div>
+                    <div class="sensor west-sensor" id="westSensor">
+                        <div class="sensor-indicator"></div>
+                        <span>W</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-grid">
+                <div class="panel">
+                    <h3>🎮 Control Panel</h3>
+                    <div class="controls">
+                        <button id="startBtn" class="btn primary">▶ Start</button>
+                        <button id="stopBtn" class="btn secondary">⏸ Pause</button>
+                        <button id="resetBtn" class="btn warning">🔄 Reset</button>
+                        <button id="emergencyBtn" class="btn info">🚑 Emergency</button>
+                    </div>
+
+                    <h4 style="margin: 20px 0 15px; color: #4a5568;">🎚️ Traffic Mode</h4>
+                    <div class="mode-selector">
+                        <div class="mode-btn active" data-mode="normal">Normal</div>
+                        <div class="mode-btn" data-mode="rush">Rush Hour</div>
+                        <div class="mode-btn" data-mode="smart">Smart AI</div>
+                        <div class="mode-btn" data-mode="manual">Manual</div>
+                    </div>
+
+                    <h4 style="margin: 20px 0 15px; color: #4a5568;">⚙️ Timing Settings</h4>
+                    <div class="setting-group">
+                        <label>Green Duration:</label>
+                        <input type="range" id="greenTime" min="5" max="30" value="15">
+                        <span id="greenTimeValue">15s</span>
+                    </div>
+                    <div class="setting-group">
+                        <label>Yellow Duration:</label>
+                        <input type="range" id="yellowTime" min="2" max="8" value="3">
+                        <span id="yellowTimeValue">3s</span>
+                    </div>
+                    <div class="setting-group">
+                        <label>Vehicle Spawn Rate:</label>
+                        <input type="range" id="vehicleFreq" min="1" max="10" value="5">
+                        <span id="vehicleFreqValue">5</span>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>📊 System Status</h3>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="label">Current Phase</span>
+                            <div class="value" id="currentPhase">Stopped</div>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Timer</span>
+                            <div class="value" id="timer">0s</div>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">N-S Traffic</span>
+                            <div class="value" id="nsTraffic">0</div>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">E-W Traffic</span>
+                            <div class="value" id="ewTraffic">0</div>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Total Vehicles</span>
+                            <div class="value" id="totalVehicles">0</div>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Avg Wait Time</span>
+                            <div class="value" id="avgWaitTime">0s</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="weather-panel">
+            <h3 style="margin-bottom: 15px; color: #2d3748;">🌤️ Weather Conditions</h3>
+            <div class="weather-grid">
+                <div class="weather-btn active" data-weather="clear">☀️ Clear</div>
+                <div class="weather-btn" data-weather="rain">🌧️ Rain</div>
+                <div class="weather-btn" data-weather="night">🌙 Night</div>
+                <div class="weather-btn" data-weather="fog">🌫️ Fog</div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>🚗 Vehicles Passed</h4>
+                <div class="stat-value" id="vehiclesPassed">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>⚡ Average Speed</h4>
+                <div class="stat-value" id="avgSpeed">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>⏱️ Queue Length</h4>
+                <div class="stat-value" id="queueLength">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>✨ Efficiency</h4>
+                <div class="stat-value" id="efficiency">0%</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 Enhanced Traffic Simulation System - Advanced Real-time Traffic Management with AI</p>
+        </footer>
+    </div>
+
+
+
+
+<script src="script.js"></script>
+</body>
+</html>
